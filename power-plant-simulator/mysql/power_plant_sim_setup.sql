@@ -34,12 +34,12 @@ CREATE TABLE organization (
     country    VARCHAR(20)     NOT NULL, 
     createdAt  TIMESTAMP       NOT NULL,
     updatedAt  TIMESTAMP       NOT NULL,   
-    PRIMARY KEY (orgId)
+    PRIMARY KEY (orgId, orgName)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE powerPlant (
     powerPlantId     INT         NOT NULL,
-    orgId            INT         NOT NULL,
+    orgName          VARCHAR(25) NOT NULL,
     isActive         BOOL        NOT NULL,
     minPower         INT         NOT NULL,
     maxPower         INT         NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE powerPlant (
     createdAt        TIMESTAMP   NOT NULL,
     updatedAt        TIMESTAMP   NOT NULL,
     PRIMARY KEY (powerPlantId),
-    FOREIGN KEY (orgId) REFERENCES organization (orgId) ON DELETE CASCADE
+    FOREIGN KEY (orgName) REFERENCES organization (orgName) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE user (
