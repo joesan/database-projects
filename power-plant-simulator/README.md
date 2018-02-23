@@ -1,4 +1,6 @@
-TODO: Add content
+# power-plant-simulator-database
+
+This project contains the DDL scripts to set up the database. Currently supported databases are H2 and MySQL
 
 To checkout a single file
 
