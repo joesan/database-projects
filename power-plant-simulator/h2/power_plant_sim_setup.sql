@@ -68,5 +68,5 @@ INSERT INTO `powerPlant` VALUES
 
 SELECT 'LOADING user' as 'INFO';
 INSERT INTO `user` VALUES 
-(1, 'Organization-001', 'user', 'joe', TIMESTAMP('2017-08-10'),  TIMESTAMP('2017-08-10')),
-(2, 'Organization-002', 'user', 'san', TIMESTAMP('2017-08-10'),  TIMESTAMP('2017-08-10'));
+(1, 'Organization-001', 'user', 'joe', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
+(2, 'Organization-002', 'user', 'san', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
