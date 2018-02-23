@@ -33,7 +33,7 @@ CREATE TABLE powerPlant (
     maxPower         INT         NOT NULL,
     rampRate         INT,
     rampRateSecs     INT,
-    powerPlantType   VRCHAR(25) check (powerPlantType in ('OnOffType', 'RampUpType')),
+    powerPlantType   VARCHAR(25) check (powerPlantType in ('OnOffType', 'RampUpType')),
     createdAt        TIMESTAMP   NOT NULL,
     updatedAt        TIMESTAMP   NOT NULL,
     PRIMARY KEY (powerPlantId),
@@ -52,21 +52,18 @@ CREATE TABLE user (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Insert some data
-SELECT 'LOADING organization' as 'INFO';
 INSERT INTO `organization` VALUES 
 ('Organization-001', 'street-001', 'city-001', 'Germany', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
 ('Organization-002', 'street-002', 'city-002', 'Germany', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
 ('Organization-003', 'street-003', 'city-003', 'Germany', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
 ('Organization-004', 'street-004', 'city-004', 'Germany', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
 
-SELECT 'LOADING powerPlant' as 'INFO';
 INSERT INTO `powerPlant` VALUES 
 ('1', 'Organization-001', true,  20,  100, NULL, NULL, 'OnOffType',  CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
 ('2', 'Organization-001', false, 100, 800, 100,  2,    'RampUpType', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
 ('3', 'Organization-002', false, 200, 400, 50,   2,    'RampUpType', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
 ('4', 'Organization-002', true,  400, 800, NULL, NULL, 'OnOffType',  CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
 
-SELECT 'LOADING user' as 'INFO';
 INSERT INTO `user` VALUES 
 (1, 'Organization-001', 'user', 'joe', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
 (2, 'Organization-002', 'user', 'san', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
