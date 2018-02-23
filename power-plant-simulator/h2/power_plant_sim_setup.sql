@@ -33,7 +33,7 @@ CREATE TABLE powerPlant (
     maxPower         INT         NOT NULL,
     rampRate         INT,
     rampRateSecs     INT,
-    powerPlantType   ENUM        ('OnOffType', 'RampUpType'),
+    powerPlantType   VRCHAR(25) check (powerPlantType in ('OnOffType', 'RampUpType')),
     createdAt        TIMESTAMP   NOT NULL,
     updatedAt        TIMESTAMP   NOT NULL,
     PRIMARY KEY (powerPlantId),
