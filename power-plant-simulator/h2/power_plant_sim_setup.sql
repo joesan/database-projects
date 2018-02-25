@@ -42,7 +42,7 @@ CREATE TABLE powerPlant (
 
 CREATE TABLE user (
     userId       INT             NOT NULL,
-    orgName        VARCHAR(25)             NOT NULL,
+    orgName      VARCHAR(25)     NOT NULL,
     firstName    VARCHAR(30)     NOT NULL,
     lastName     VARCHAR(30)     NOT NULL,
     createdAt    TIMESTAMP       NOT NULL,
