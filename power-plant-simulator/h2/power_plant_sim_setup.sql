@@ -65,7 +65,7 @@ INSERT INTO `powerPlant` VALUES
 ('4', 'Organization-002', true,  200, 400, 50,   2,    'RampUpType', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
 ('5', 'Organization-003', false, 200, 600, NULL, NULL, 'OnOffType',  CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
 ('6', 'Organization-003', true,  400, 800, NULL, NULL, 'OnOffType',  CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
-('7', 'Organization-004', true,  100, 800, NULL, NULL, 'RampUpType', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
+('7', 'Organization-004', true,  100, 800, 100,  4,    'RampUpType', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
 ('8', 'Organization-004', false, 100, 900, NULL, NULL, 'OnOffType',  CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
 
 INSERT INTO `user` VALUES 
