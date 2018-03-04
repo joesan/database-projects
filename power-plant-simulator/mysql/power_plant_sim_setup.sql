@@ -2,7 +2,6 @@
 -- setup.sql
 --
 -- This file is part of 
---   - http://github.com/joesan/power-simulator
 --   - http://github.com/joesan/plant-simulator
 --
 -- Copyright (c) 2017 joesan @ http://github.com/joesan
