@@ -36,7 +36,7 @@ CREATE TABLE organization (
     PRIMARY KEY (orgName)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE powerPlant (
+CREATE TABLE powerplant (
     powerPlantId     INT         NOT NULL,
     orgName          VARCHAR(25) NOT NULL,
     isActive         BOOL        NOT NULL,
@@ -74,8 +74,8 @@ INSERT INTO `organization` VALUES
 ('Organization-003', 'street-003', 'city-003', 'Germany', TIMESTAMP('2017-08-10'), TIMESTAMP('2017-08-10')),
 ('Organization-004', 'street-004', 'city-004', 'Germany', TIMESTAMP('2017-08-10'), TIMESTAMP('2017-08-10'));
 
-SELECT 'LOADING powerPlant' as 'INFO';
-INSERT INTO `powerPlant` VALUES 
+SELECT 'LOADING powerplant' as 'INFO';
+INSERT INTO `powerplant` VALUES 
 ('1', 'Organization-001', true,  20,  100, NULL, NULL, 'OnOffType',  TIMESTAMP('2017-08-10'),  TIMESTAMP('2017-08-10')),
 ('2', 'Organization-001', true,  100, 800, 100,  2,    'RampUpType', TIMESTAMP('2017-08-10'),  TIMESTAMP('2017-08-10')),
 ('3', 'Organization-002', true,  200, 400, 50,   2,    'RampUpType', TIMESTAMP('2017-08-10'),  TIMESTAMP('2017-08-10')),
