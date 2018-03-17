@@ -1,6 +1,6 @@
 # power-plant-simulator-database
 
-This project contains the DDL scripts to set up the database for the plant-simulator project which can he found [here](https://github.com/joesan/plant-simulator).
+This project contains the DDL scripts to set up the database for the [plant-simulator project](https://github.com/joesan/plant-aggregator) which can he found [here](https://github.com/joesan/plant-simulator).
 
 Currently supported databases are H2 and MySQL
 
