@@ -1,6 +1,6 @@
 # power-plant-aggregator-database
 
-This project contains the DDL scripts to set up the database. Currently supported databases are H2 and MySQL
+This project contains the DDL scripts to set up the database for the (plant-aggregator project)[https://github.com/joesan/plant-aggregator] Currently supported databases are H2 and MySQL
 
 To checkout a single file
 
