@@ -1,32 +1,59 @@
 #!/bin/sh
-exec scala "$0" "$@"
+exec scala -classpath "lib/h2-1.4.186.jar:lib/joda-time-2.9.9.jar:lib/slick_2.11-3.2.0.jar:lib/scala-async_2.11-0.9.6.jar" "$0" "$@"
 !#
-
-/***
-scalaVersion := "2.11.11"
-
-libraryDependencies ++= Seq(
-  "joda-time" % "joda-time" % "2.9.9",
-  "com.typesafe.slick" %% "slick" % "3.2.0",
-  "com.h2database" % "h2" % "1.4.186"
-)
-*/
 
 import java.io.File
 import sys.process._
 
+import java.sql.Timestamp
+
 import slick.driver.H2Driver.api._
-import scala.concurrent.ExecutionContext.Implicits.global
-import driver.api._
-import slick.jdbc.JdbcProfile
+import slick.jdbc.JdbcBackend.Database
+import slick.jdbc.{JdbcBackend, JdbcProfile}
 
 import org.joda.time.{DateTime, DateTimeZone}
+
+import scala.concurrent.Await
+import scala.concurrent.duration._
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
  * The goal of this file is to spit out a H2 database that
  * can be used to load test the plant-simulator application
  */
 object DBGenerator {
+
+  // Slick table mappings
+  case class OrganizationRow(
+    orgName: String,
+    street: String,
+    city: String,
+    country: String,
+    createdAt: DateTime,
+    updatedAt: DateTime
+  )
+
+  case class UserRow(
+    userId: Int,
+    orgName: String,
+    firstName: String,
+    lastName: String,
+    createdAt: DateTime,
+    updatedAt: DateTime
+  )
+
+  case class PowerPlantRow(
+    id: Int,
+    orgName: String,
+    isActive: Boolean,
+    minPower: Double,
+    maxPower: Double,
+    rampRatePower: Option[Double] = None,
+    rampRateSecs: Option[Long] = None,
+    powerPlantTyp: PowerPlantType,
+    createdAt: DateTime,
+    updatedAt: DateTime
+  )
   
   /**
    * ADTs defining the available PowerPlant Types
@@ -54,38 +81,6 @@ object DBGenerator {
   class DBSchema (val driver: JdbcProfile) {
 
     import driver.api._
-    
-    // Slick table mappings
-    case class OrganizationRow(
-      orgName: String,
-      street: String,
-      city: String,
-      country: String,
-      createdAt: DateTime,
-      updatedAt: DateTime
-    )
-
-    case class UserRow(
-      userId: Int,
-      orgName: String,
-      firstName: String,
-      lastName: String,
-      createdAt: DateTime,
-      updatedAt: DateTime
-    )
-
-    case class PowerPlantRow(
-      id: Int,
-      orgName: String,
-      isActive: Boolean,
-      minPower: Double,
-      maxPower: Double,
-      rampRatePower: Option[Double] = None,
-      rampRateSecs: Option[Long] = None,
-      powerPlantTyp: PowerPlantType,
-      createdAt: DateTime,
-      updatedAt: DateTime
-    )
 
     /**
      * Mapping for using Joda Time and SQL Time.
@@ -106,7 +101,7 @@ object DBGenerator {
       )
 
     // Slick table mapping definitions
-    class OrganizationTable(tag: Tag) extends Table[Organization](tag, "organization") {
+    class OrganizationTable(tag: Tag) extends Table[OrganizationRow](tag, "organization") {
       def orgName = column[String]("orgName", O.PrimaryKey)
       def street = column[String]("street")
       def city = column[String]("city")
@@ -125,7 +120,7 @@ object DBGenerator {
       }
     }
 
-    class UserTable(tag: Tag) extends Table[User](tag, "user") {
+    class UserTable(tag: Tag) extends Table[UserRow](tag, "user") {
       def id = column[Int]("userId", O.PrimaryKey)
       def orgName = column[String]("orgName")
       def firstName = column[String]("firstName")
@@ -179,15 +174,15 @@ object DBGenerator {
   // The main program starts here after all those ceremonies!
   def main(args: Array[String]) {
     val h2DB = "jdbc:h2:file:./data/plant-sim-load-test-db;MODE=MySQL;DATABASE_TO_UPPER=false;IFEXISTS=TRUE"
-    val user = "sa"
-    val pass = ""
+    val user = Some("sa")
+    val pass = Some("")
     val driver: JdbcProfile = {
       Class.forName("org.h2.Driver")
       slick.jdbc.H2Profile 
     }
  
     val db: JdbcBackend.DatabaseDef = {
-      Database.forURL(h2DB, user.orNull, pass.orNull, driver = driver)
+      Database.forURL(h2DB, user.orNull, pass.orNull, driver = "org.h2.Driver")
     }
     
     // initialize the DBSchema
@@ -249,12 +244,12 @@ object DBGenerator {
   // We create a sequence of PowerPlants
   val powerPlants = (1 to 100000) map { i =>
     PowerPlantRow(
-      id = Some(i),
+      id = i,
       orgName = if (i % 2 == 0) "joesan 1" else "joesan 2",
       isActive = true,
       minPower = if (i % 2 == 0) 200 else 100,
       maxPower = if (i % 2 == 0) 600 else 800,
-      powerPlantTyp = if (i % 2 == 0) OnOffType else RampUpType,
+      powerPlantTyp = if (i % 2 == 0) PowerPlantType.OnOffType else PowerPlantType.RampUpType,
       rampRatePower = if (i % 2 == 0) None else Some(20.0),
       rampRateSecs = if (i % 2 == 0) None else Some(2),
       createdAt = DateTime.now(DateTimeZone.UTC),
@@ -273,7 +268,7 @@ object DBGenerator {
       // Insert some PowerPlants
       dbSchema.powerPlants ++= powerPlants
     )
-    Await.result(testDatabase.run(setup), 5.seconds)
+    Await.result(db.run(setup), 5.seconds)
   }
 }
-DockerBuild.main(args)
+DBGenerator.main(args)
