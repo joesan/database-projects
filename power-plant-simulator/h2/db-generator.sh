@@ -193,7 +193,7 @@ object DBGenerator {
     
     try {
       // 1. Drop if the schema exists
-      h2SchemaDrop(dbSchema, db)
+      //h2SchemaDrop(dbSchema, db)
       
       // 2. Create the Schema
       h2SchemaSetup(dbSchema, db)
@@ -205,7 +205,7 @@ object DBGenerator {
   
   protected def h2SchemaDrop(dbSchema: DBSchema, db: JdbcBackend.DatabaseDef): Unit = {
     val allSchemas = DBIO.seq(
-      (dbSchema.organizations.schema ++ dbSchema.users.schema ++ dbSchema.powerPlants.schema).drop
+      (dbSchema.powerPlants.schema ++ dbSchema.organizations.schema ++ dbSchema.users.schema).drop
     )
     Await.result(db.run(allSchemas), 5.seconds)
   }
