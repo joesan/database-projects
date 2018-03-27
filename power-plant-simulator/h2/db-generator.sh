@@ -20,7 +20,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import driver.api._
 import slick.jdbc.JdbcProfile
 
-import org.joda.time.DateTime
+import org.joda.time.{DateTime, DateTimeZone}
 
 /**
  * The goal of this file is to spit out a H2 database that
@@ -56,7 +56,7 @@ object DBGenerator {
     import driver.api._
     
     // Slick table mappings
-    case class Organization(
+    case class OrganizationRow(
       orgName: String,
       street: String,
       city: String,
@@ -65,7 +65,7 @@ object DBGenerator {
       updatedAt: DateTime
     )
 
-    case class User(
+    case class UserRow(
       userId: Int,
       orgName: String,
       firstName: String,
@@ -197,9 +197,17 @@ object DBGenerator {
     import dbSchema.driver.api._
     
     try {
-      // ...
+      // 1. Drop if the schema exists
+      h2SchemaDrop()
+      
+      // 2. Create the Schema
+      h2SchemaSetup()
+      
+      // 3. Populate the tables
+      populateTables()
     } finally db.close
-    
+  }
+  
   protected def h2SchemaDrop(): Unit = {
     val allSchemas = DBIO.seq(
       (dbSchema.organizations.schema ++ dbSchema.users.schema ++ dbSchema.powerPlants.schema).create
@@ -213,19 +221,58 @@ object DBGenerator {
     )
     Await.result(db.run(allSchemas), 5.seconds)
   }
+  
+  // We create a sequence of Organization's
+  val organizations = (1 to 4) map { i =>
+    OrganizationRow(
+      orgName = s"joesan $i",
+      street = s"joesan street $i",
+      city = s"joesan city $i",
+      country = "GERMANY",
+      createdAt = DateTime.now(DateTimeZone.UTC),
+      updatedAt = DateTime.now(DateTimeZone.UTC)
+    )
+  }
+  
+  // We create a sequence of User's
+  val users = (1 to 4) map { i =>
+    UserRow(
+      userId = i,
+      orgName = s"joesan $i",
+      firstName = s"joesan street $i",
+      lastName = s"joesan city $i",
+      createdAt = DateTime.now(DateTimeZone.UTC),
+      updatedAt = DateTime.now(DateTimeZone.UTC)
+    )
+  }
+  
+  // We create a sequence of PowerPlant's
+  val powerPlants = (1 to 100000) map { i =>
+    PowerPlantRow(
+      id = Some(i),
+      orgName = if (i % 2 == 0) "joesan 1" else "joesan 2",
+      isActive = true,
+      minPower = if (i % 2 == 0) 200 else 100,
+      maxPower = if (i % 2 == 0) 600 else 800,
+      powerPlantTyp = if (i % 2 == 0) OnOffType else RampUpType,
+      rampRatePower = if (i % 2 == 0) None else Some(20.0),
+      rampRateSecs = if (i % 2 == 0) None else Some(2),
+      createdAt = DateTime.now(DateTimeZone.UTC),
+      updatedAt = DateTime.now(DateTimeZone.UTC)
+    )
+  }
 
   protected def populateTables(): Unit = {
     val setup = DBIO.seq(
-      // Insert some addresses
-      //AddressTable.all ++= addresses,
+      // Insert some Organization's
+      dbSchema.organizations ++= organizations,
+      
+      // Insert some User's
+      dbSchema.users ++ = users
 
-      // Insert some power plants
-      PowerPlantTable.all ++= powerPlants
+      // Insert some PowerPlant's
+      dbSchema.powerPlants ++= powerPlants
     )
     Await.result(testDatabase.run(setup), 5.seconds)
-  }
-    
-    println("START :: Inserting Records")
-    buildImage(loadConfig("application.conf"))
   }
 }
