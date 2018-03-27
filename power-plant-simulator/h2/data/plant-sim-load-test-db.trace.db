@@ -1,0 +1,3 @@
+03-27 22:49:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "organization" already exists; SQL statement:
+create table "organization" ("orgName" VARCHAR NOT NULL PRIMARY KEY,"street" VARCHAR NOT NULL,"city" VARCHAR NOT NULL,"country" VARCHAR NOT NULL,"createdAt" TIMESTAMP NOT NULL,"updatedAt" TIMESTAMP NOT NULL) [42101-186]

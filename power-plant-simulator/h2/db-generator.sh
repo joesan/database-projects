@@ -1,5 +1,5 @@
 #!/bin/sh
-exec scala -classpath "lib/h2-1.4.186.jar:lib/joda-time-2.9.9.jar:lib/slick_2.11-3.2.0.jar:lib/scala-async_2.11-0.9.6.jar" "$0" "$@"
+exec scala -classpath "lib/slf4j-api-1.7.25.jar:lib/reactive-streams-1.0.1.jar:lib/h2-1.4.186.jar:lib/joda-time-2.9.9.jar:lib/slick_2.11-3.2.0.jar:lib/scala-async_2.11-0.9.6.jar" "$0" "$@"
 !#
 
 import java.io.File
@@ -171,9 +171,9 @@ object DBGenerator {
     val powerPlants = TableQuery[PowerPlantTable]
   }
 
-  // The main program starts here after all those ceremonies!
+  // The main program starts here after all those ceremonies
   def main(args: Array[String]) {
-    val h2DB = "jdbc:h2:file:./data/plant-sim-load-test-db;MODE=MySQL;DATABASE_TO_UPPER=false;IFEXISTS=TRUE"
+    val h2DB = "jdbc:h2:file:./data/plant-sim-load-test-db;MODE=MySQL;DATABASE_TO_UPPER=false"
     val user = Some("sa")
     val pass = Some("")
     val driver: JdbcProfile = {
@@ -193,24 +193,24 @@ object DBGenerator {
     
     try {
       // 1. Drop if the schema exists
-      h2SchemaDrop()
+      h2SchemaDrop(dbSchema, db)
       
       // 2. Create the Schema
-      h2SchemaSetup()
+      h2SchemaSetup(dbSchema, db)
       
       // 3. Populate the tables
-      populateTables()
+      populateTables(dbSchema, db)
     } finally db.close
   }
   
-  protected def h2SchemaDrop(): Unit = {
+  protected def h2SchemaDrop(dbSchema: DBSchema, db: JdbcBackend.DatabaseDef): Unit = {
     val allSchemas = DBIO.seq(
-      (dbSchema.organizations.schema ++ dbSchema.users.schema ++ dbSchema.powerPlants.schema).create
+      (dbSchema.organizations.schema ++ dbSchema.users.schema ++ dbSchema.powerPlants.schema).drop
     )
     Await.result(db.run(allSchemas), 5.seconds)
   }
 
-  protected def h2SchemaSetup(): Unit = {
+  protected def h2SchemaSetup(dbSchema: DBSchema, db: JdbcBackend.DatabaseDef): Unit = {
     val allSchemas = DBIO.seq(
       (dbSchema.organizations.schema ++ dbSchema.users.schema ++ dbSchema.powerPlants.schema).create
     )
@@ -218,7 +218,7 @@ object DBGenerator {
   }
   
   // We create a sequence of Organizations
-  val organizations = (1 to 4) map { i =>
+  val organizationRows = (1 to 4) map { i =>
     OrganizationRow(
       orgName = s"joesan $i",
       street = s"joesan street $i",
@@ -230,7 +230,7 @@ object DBGenerator {
   }
   
   // We create a sequence of Users
-  val users = (1 to 4) map { i =>
+  val userRows = (1 to 4) map { i =>
     UserRow(
       userId = i,
       orgName = s"joesan $i",
@@ -242,7 +242,7 @@ object DBGenerator {
   }
   
   // We create a sequence of PowerPlants
-  val powerPlants = (1 to 100000) map { i =>
+  val powerPlantRows = (1 to 100000) map { i =>
     PowerPlantRow(
       id = i,
       orgName = if (i % 2 == 0) "joesan 1" else "joesan 2",
@@ -257,16 +257,16 @@ object DBGenerator {
     )
   }
 
-  protected def populateTables(): Unit = {
+  protected def populateTables(dbSchema: DBSchema, db: JdbcBackend.DatabaseDef): Unit = {
     val setup = DBIO.seq(
       // Insert some Organizations
-      dbSchema.organizations ++= organizations,
+      dbSchema.organizations ++= organizationRows,
       
       // Insert some Users
-      dbSchema.users ++ = users,
+      dbSchema.users ++= userRows,
 
       // Insert some PowerPlants
-      dbSchema.powerPlants ++= powerPlants
+      dbSchema.powerPlants ++= powerPlantRows
     )
     Await.result(db.run(setup), 5.seconds)
   }
