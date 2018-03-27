@@ -6,7 +6,7 @@ exec scala "$0" "$@"
 scalaVersion := "2.11.11"
 
 libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play-json-joda" % "2.6.0",
+  "joda-time" % "joda-time" % "2.9.9",
   "com.typesafe.slick" %% "slick" % "3.2.0",
   "com.h2database" % "h2" % "1.4.186"
 )
@@ -29,7 +29,7 @@ import org.joda.time.{DateTime, DateTimeZone}
 object DBGenerator {
   
   /**
-   * ADT's defining the available PowerPlant Types
+   * ADTs defining the available PowerPlant Types
    */
   sealed trait PowerPlantType
   object PowerPlantType {
@@ -222,7 +222,7 @@ object DBGenerator {
     Await.result(db.run(allSchemas), 5.seconds)
   }
   
-  // We create a sequence of Organization's
+  // We create a sequence of Organizations
   val organizations = (1 to 4) map { i =>
     OrganizationRow(
       orgName = s"joesan $i",
@@ -234,7 +234,7 @@ object DBGenerator {
     )
   }
   
-  // We create a sequence of User's
+  // We create a sequence of Users
   val users = (1 to 4) map { i =>
     UserRow(
       userId = i,
@@ -246,7 +246,7 @@ object DBGenerator {
     )
   }
   
-  // We create a sequence of PowerPlant's
+  // We create a sequence of PowerPlants
   val powerPlants = (1 to 100000) map { i =>
     PowerPlantRow(
       id = Some(i),
@@ -264,15 +264,16 @@ object DBGenerator {
 
   protected def populateTables(): Unit = {
     val setup = DBIO.seq(
-      // Insert some Organization's
+      // Insert some Organizations
       dbSchema.organizations ++= organizations,
       
-      // Insert some User's
-      dbSchema.users ++ = users
+      // Insert some Users
+      dbSchema.users ++ = users,
 
-      // Insert some PowerPlant's
+      // Insert some PowerPlants
       dbSchema.powerPlants ++= powerPlants
     )
     Await.result(testDatabase.run(setup), 5.seconds)
   }
 }
+DockerBuild.main(args)
