@@ -173,7 +173,7 @@ object DBGenerator {
 
   // The main program starts here after all those ceremonies
   def main(args: Array[String]) {
-    val h2DB = "jdbc:h2:file:./data/plant-sim-load-test-db;MODE=MySQL;DATABASE_TO_UPPER=false"
+    val h2DB = "jdbc:h2:file:./data/plant-sim-load-test;MODE=MySQL;DATABASE_TO_UPPER=false"
     val user = Some("sa")
     val pass = Some("")
     val driver: JdbcProfile = {
