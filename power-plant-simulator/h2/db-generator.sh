@@ -22,6 +22,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
  * can be used to load test the plant-simulator application
  */
 object DBGenerator {
+  
+  // Contains the total number of PowerPlant's that you want to use for load testing
+  val totalPowerPlants = 1000000
 
   // Slick table mappings
   case class OrganizationRow(
@@ -242,7 +245,7 @@ object DBGenerator {
   }
   
   // We create a sequence of PowerPlants
-  val powerPlantRows = (1 to 100000) map { i =>
+  val powerPlantRows = (1 to totalPowerPlants) map { i =>
     PowerPlantRow(
       id = i,
       orgName = if (i % 2 == 0) "joesan 1" else "joesan 2",
