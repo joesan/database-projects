@@ -18,6 +18,8 @@ import com.softwaremill.sttp._
  * application via the REST endpoints exposed by the plant-simulator
  */
 object Dispatcher {
+  
+  val totalPowerPlants = 1000000 // This should match the totalPowerPlants from the db-generator.sh script
 
   // Utility functions that we could use for dispatching
   def dispatchURL(id: Int) = s"http://localhost:9000/plantsim/powerplant/$id/dispatch"
@@ -46,7 +48,7 @@ object Dispatcher {
   }
 
   def main(args: Array[String]) {
-    (1 to 100000) map { i =>
+    (1 to totalPowerPlants) map { i =>
       val url = dispatchURL(i)
       // All PowerPlants with even id is OnOffType and all odd ids are RampUpType
       if (i % 2 == 0) { // Dispatch OnOffType
