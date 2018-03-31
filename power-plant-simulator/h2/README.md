@@ -28,7 +28,7 @@ To generate the database file for load testing, we have here 2 option. Again fee
 
 #### 1. Using Bash
 
-#### 2. Using Ammonite
+First, you run the following script to generate the database file:
 
 ```
 ./db-generator.sh
@@ -53,5 +53,7 @@ A few notes on the dispatch.sh script:
 
 2. To modify the script for matching the total number of PowerPlant's that you created from the db-generator.sh script, you      can modify the following parameter:
    val totalPowerPlants = 1000000 // Set this number to match the totalPowerPlants count from the db-generator.sh
+
+#### 2. Using Ammonite
    
 Once you start the dispatch.sh script, stay calm and have a cup of coffee!
