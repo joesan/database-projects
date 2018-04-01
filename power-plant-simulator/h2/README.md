@@ -33,7 +33,24 @@ A few notes on the db-generator.sh script:
 
 #### 3. Using Ammonite
 
-If you find the classical way too boring, you have the option to populate the database file by running an [Ammonite](http://ammonite.io/#ScalaScripts) script.
+If you find the classical way of generating a database file too boring, you have the option to populate the database file by running an [Ammonite](http://ammonite.io/#ScalaScripts) script. But this comes with its own complexity which is installing Scala, SBT and Ammonite. But I assume that you might already have Scala and SBT installed, so just go and install [Ammonite](http://ammonite.io/#ScalaScripts)
+
+Now that you have ammonite installed, just open a bash window and run the following command:
+
+```
+./db-generator.sc
+```
+
+A few notes on the script:
+
+1. You will otice that the [Ammonite script uses the ivy resolution](http://ammonite.io/#import$ivy) for resolving external      dependencies. So, you do not have to have a local copy of the dependant jar files like we have for the bash shell script      option to generate the database file.
+
+2. Just make sure that you do not have an insane number for PowerPlant's so that you can try all the API's quickly
+   val totalPowerPlants = 10 // 10 PowerPlant's would be a good number to start with
+   
+3. The generted database filw is to be found under the project's root directory.
+
+4. TODO... Document how to make use of the application.conf????
 
 ## Application Load Test Database
 
