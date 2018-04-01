@@ -24,7 +24,12 @@ To generate the database file for the project, you could run the following scrip
 ./db-generator.sh
 ```
 
-The generated database file is to be found in the data/ [TODO.... document]
+A few notes on the db-generator.sh script:
+
+1. Just make sure that you do not have an insane number for PowerPlant's so that you can try all the API's quickly
+   val totalPowerPlants = 10 // 10 PowerPlant's would be a good number to start with
+   
+2. The H2 database file will be generated after you run this script. You can then copy this database file to your power-plant    simulator project's root folder location on your local machine. The generated database file can be found under the project    root folder.
 
 #### 3. Using Ammonite
 
@@ -39,15 +44,15 @@ To generate the database file for load testing, we have here 2 option. Again fee
 First, you run the following script to generate the database file:
 
 ```
-./db-loadtest-generator.sh
+./db-generator.sh
 ```
 
 A few notes on the db-generator.sh script:
 
-1. If you want to put more load on the application, just increase the number of PowerPlant's by modifying the script
-   val totalPowerPlants = 1000000 // Set this number to your liking!
+1. Unlike the database file for just running the application, here the goal would be to have as many PowerPlant's as you might    want so that you can really stress the application. So just increase the number of PowerPlant's by modifying the script
+   val totalPowerPlants = 1000000 // Set this number to your liking! I have it here set for a million
    
-2. The H2 database file will be generated after you run this script. You can then copy this database file to your power-plant    simulator project's root folder location on your local machine.   
+2. The H2 database file will be generated after you run this script. You can then copy this database file to your power-plant    simulator project's root folder location on your local machine. The generated database file can be found under the project    root folder.   
 
 There is yet another script that you can use once your application is up and running with the database file from the above step. 
 
