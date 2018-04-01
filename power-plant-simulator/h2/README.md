@@ -12,7 +12,7 @@ We have several options here to generate a database file. We go through each one
 
 #### 1. Classical approach
 
-The classical way to generate a database file is to run the .sql script using a database explorer. Since, there is some detailed instruction on how to do this. Have a look [here](http://www.h2database.com/html/tutorial.html#creating_new_databases) and [here](http://www.h2database.com/html/tutorial.html#tutorial_starting_h2_console). 
+The classical way to generate a database file is to run the .sql script using a database explorer. Since, there is some detailed instruction on how to do this, I would recomment you to have a look [here](http://www.h2database.com/html/tutorial.html#creating_new_databases) and [here](http://www.h2database.com/html/tutorial.html#tutorial_starting_h2_console). 
 
 Assuming that you have the h2 jar file downloaded locally on your machine, open the H2 console and simply run the power_plant_sim_setup.sql [script](https://github.com/joesan/database-projects/blob/master/power-plant-simulator/h2/scripts/database/power_plant_sim_setup.sql)
 
