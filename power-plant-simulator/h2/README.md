@@ -18,6 +18,14 @@ Assuming that you have the h2 jar file downloaded locally on your machine, open 
 
 #### 2. Using Bash
 
+To generate the database file for the project, you could run the following script
+
+```
+./db-generator.sh
+```
+
+The generated database file is to be found in the data/ [TODO.... document]
+
 #### 3. Using Ammonite
 
 If you find the classical way too boring, you have the option to populate the database file by running an [Ammonite](http://ammonite.io/#ScalaScripts) script.
@@ -31,7 +39,7 @@ To generate the database file for load testing, we have here 2 option. Again fee
 First, you run the following script to generate the database file:
 
 ```
-./db-generator.sh
+./db-loadtest-generator.sh
 ```
 
 A few notes on the db-generator.sh script:
