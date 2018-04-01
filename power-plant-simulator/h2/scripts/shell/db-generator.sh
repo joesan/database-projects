@@ -1,5 +1,5 @@
 #!/bin/sh
-exec scala -classpath "lib/slf4j-api-1.7.25.jar:lib/reactive-streams-1.0.1.jar:lib/h2-1.4.186.jar:lib/joda-time-2.9.9.jar:lib/slick_2.11-3.2.0.jar:lib/scala-async_2.11-0.9.6.jar" "$0" "$@"
+exec scala -classpath "../../lib/slf4j-api-1.7.25.jar:../../lib/reactive-streams-1.0.1.jar:../../lib/h2-1.4.186.jar:../../lib/joda-time-2.9.9.jar:../../lib/slick_2.11-3.2.0.jar:../../lib/scala-async_2.11-0.9.6.jar" "$0" "$@"
 !#
 
 import java.io.File
@@ -23,7 +23,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
  */
 object DBGenerator {
   
-  // Contains the total number of PowerPlant's that you want to use for load testing
+  // Contains the total number of PowerPlants that you want to use for load testing
   val totalPowerPlants = 1000000
 
   // Slick table mappings
