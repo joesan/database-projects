@@ -1,6 +1,6 @@
 # H2 Database Setup
 
-This project contains the needed scripts to populate a H2 database file that can then be used to run the [plant-simulator](https://github.com/joesan/plant-simulator/) application.
+This project contains all the needed scripts to populate a H2 database file that can then be used to run the [plant-simulator](https://github.com/joesan/plant-simulator/) application.
 
 There are also scripts to generate a massive amount of data as a H2 database file so that we can run load test on the plant-simulator.
 
