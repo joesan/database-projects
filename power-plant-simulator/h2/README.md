@@ -48,7 +48,7 @@ A few notes on the script:
 2. Just make sure that you do not have an insane number for PowerPlant's so that you can try all the API's quickly
    val totalPowerPlants = 10 // 10 PowerPlant's would be a good number to start with
    
-3. The generted database filw is to be found under the project's root directory.
+3. The generted database file is to be found under the project's root directory.
 
 4. TODO... Document how to make use of the application.conf????
 
