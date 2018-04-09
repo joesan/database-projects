@@ -35,10 +35,10 @@ A few notes on the db-generator.sh script:
 
 If you find the classical way of generating a database file too boring, you have the option to populate the database file by running an [Ammonite](http://ammonite.io/#ScalaScripts) script. But this comes with its own complexity which is installing Scala, SBT and Ammonite. But I assume that you might already have Scala and SBT installed, so just go and install [Ammonite](http://ammonite.io/#ScalaScripts)
 
-Now that you have ammonite installed, just open a bash window and run the following command:
+Now that you have ammonite installed, just open a bash window, navigate to the database-projects/power-plant-simulator/h2/scripts/scala folder and run the following command:
 
 ```
-./db-generator.sc
+amm db-generator.sc
 ```
 
 A few notes on the script:
