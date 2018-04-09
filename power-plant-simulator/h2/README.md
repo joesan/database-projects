@@ -43,7 +43,7 @@ Now that you have ammonite installed, just open a bash window and run the follow
 
 A few notes on the script:
 
-1. You will otice that the [Ammonite script uses the ivy resolution](http://ammonite.io/#import$ivy) for resolving external      dependencies. So, you do not have to have a local copy of the dependant jar files like we have for the bash shell script      option to generate the database file.
+1. You will notice that the [Ammonite script uses the ivy resolution](http://ammonite.io/#import$ivy) for resolving external      dependencies. So, you do not have to have a local copy of the dependant jar files like we have for the bash shell script      option to generate the database file.
 
 2. Just make sure that you do not have an insane number for PowerPlant's so that you can try all the API's quickly
    val totalPowerPlants = 10 // 10 PowerPlant's would be a good number to start with
