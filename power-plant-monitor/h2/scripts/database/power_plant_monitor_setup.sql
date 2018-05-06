@@ -24,7 +24,7 @@ CREATE TABLE tenant (
     country    VARCHAR(20)     NOT NULL, 
     createdAt  TIMESTAMP       NOT NULL,
     updatedAt  TIMESTAMP       NOT NULL,   
-    PRIMARY KEY (tetantId)
+    PRIMARY KEY (tenantId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE chronometer (
@@ -37,7 +37,7 @@ CREATE TABLE chronometer (
 
 CREATE TABLE powerplant (
     powerPlantId     INT         NOT NULL,
-    tetantId         INT         NOT NULL,
+    tenantId         INT         NOT NULL,
     isActive         BOOL        NOT NULL,
     minPower         INT         NOT NULL,
     maxPower         INT         NOT NULL,
@@ -68,7 +68,7 @@ INSERT INTO `tenant` VALUES
 (3, 'Organization-003', 'street-003', 'city-003', 'Germany', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
 (4, 'Organization-004', 'street-004', 'city-004', 'Germany', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
 
-INSERT INTO `powerPlant` VALUES 
+INSERT INTO `powerplant` VALUES 
 (1, 1, true,  20,  100, NULL, NULL, 'OnOffType',  CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
 (2, 1, true,  100, 800, 100,  2,    'RampUpType', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
 (3, 2, true,  200, 400, 50,   2,    'RampUpType', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
