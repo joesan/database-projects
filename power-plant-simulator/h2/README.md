@@ -54,7 +54,7 @@ A few notes on the script:
 
 ## Application Load Test Database
 
-To generate the database file for load testing, we have here 2 option. Again feel free to choose one!
+To generate the database file for load testing, we have here 2 options! Again feel free to choose one of your liking!
 
 #### 1. Using Bash
 
@@ -67,7 +67,7 @@ First, you run the following script to generate the database file:
 A few notes on the db-generator.sh script:
 
 1. Unlike the database file for just running the application, here the goal would be to have as many PowerPlant's as you might    want so that you can really stress the application. So just increase the number of PowerPlant's by modifying the script
-   val totalPowerPlants = 1000000 // Set this number to your liking! I have it here set for a million
+   val totalPowerPlants = 1000000 // Set this number to your liking! I have it here set for a million PowerPlant's
    
 2. The H2 database file will be generated after you run this script. You can then copy this database file to your power-plant    simulator project's root folder location on your local machine. The generated database file can be found under the project    root folder.   
 
@@ -85,5 +85,23 @@ A few notes on the dispatch.sh script:
    val totalPowerPlants = 1000000 // Set this number to match the totalPowerPlants count from the db-generator.sh
 
 #### 2. Using Ammonite
+
+First run the following script to populate the load test database
+
+```
+amm db-generator.sc
+```
+
+A few notes on the script:
+
+1. Just make sure that you do not have an insane number for PowerPlant's so that you can try all the API's quickly
+   val totalPowerPlants = 1000000 // Load testing means more PowerPlant's, here it is one million!
    
-Once you start the dispatch.sh script, stay calm and have a cup of coffee!
+2. The generted database file is to be found under the project's root directory.
+
+Assuming that you have [Ammonite](http://ammonite.io/) installed, just open a bash window, navigate to the database-projects/power-plant-simulator/h2/scripts/scala folder and run the following command:
+
+```
+amm dispatch.sc
+```
+Once you start the dispatch.sc or the dispatch.sh script, stay calm and have a cup of coffee!
