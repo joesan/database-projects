@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS user,
 
 /*!50503 select CONCAT('storage engine: ', @@default_storage_engine) as INFO */;
 
-CREATE TABLE organization (
-    orgName    VARCHAR(25)     NOT NULL,
+CREATE TABLE tenant (
+    tName    VARCHAR(25)     NOT NULL,
     street     VARCHAR(20)     NOT NULL,
     city       VARCHAR(20)     NOT NULL,
     country    VARCHAR(20)     NOT NULL, 
