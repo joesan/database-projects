@@ -21,19 +21,31 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS user,
                      powerPlant,
-                     organization;
+                     chronometer,
+                     tenant;
 
 /*!50503 select CONCAT('storage engine: ', @@default_storage_engine) as INFO */;
 
 CREATE TABLE tenant (
-    tName    VARCHAR(25)     NOT NULL,
-    street     VARCHAR(20)     NOT NULL,
-    city       VARCHAR(20)     NOT NULL,
-    country    VARCHAR(20)     NOT NULL, 
-    createdAt  TIMESTAMP       NOT NULL,
-    updatedAt  TIMESTAMP       NOT NULL,   
-    PRIMARY KEY (orgName)
+    tenantId      INT             NOT NULL,
+    tenantName    VARCHAR(25)     NOT NULL,
+    street        VARCHAR(20)     NOT NULL,
+    city          VARCHAR(20)     NOT NULL,
+    country       VARCHAR(20)     NOT NULL, 
+    createdAt     TIMESTAMP       NOT NULL,
+    updatedAt     TIMESTAMP       NOT NULL,   
+    PRIMARY KEY (tenentId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE chronometer (
+    id         INT        NOT NULL,
+    tenantId   INT        NOT NULL,
+    lastUpdate TIMESTAMP  NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (tenantId) REFERENCES tenant (tenantId) ON DELETE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 CREATE TABLE powerplant (
     powerPlantId     INT         NOT NULL,
@@ -52,7 +64,7 @@ CREATE TABLE powerplant (
 
 CREATE TABLE user (
     userId       INT             NOT NULL,
-    orgName        VARCHAR(25)             NOT NULL,
+    orgName      VARCHAR(25)     NOT NULL,
     firstName    VARCHAR(30)     NOT NULL,
     lastName     VARCHAR(30)     NOT NULL,
     createdAt    TIMESTAMP       NOT NULL,
@@ -66,8 +78,8 @@ CREATE TABLE user (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 -- Insert some data
-SELECT 'LOADING organization' as 'INFO';
-INSERT INTO `organization` VALUES 
+SELECT 'LOADING tenant' as 'INFO';
+INSERT INTO `tenant` VALUES 
 ('Organization-001', 'street-001', 'city-001', 'Germany', TIMESTAMP('2017-08-10'), TIMESTAMP('2017-08-10')),
 ('Organization-002', 'street-002', 'city-002', 'Germany', TIMESTAMP('2017-08-10'), TIMESTAMP('2017-08-10')),
 ('Organization-003', 'street-003', 'city-003', 'Germany', TIMESTAMP('2017-08-10'), TIMESTAMP('2017-08-10')),
