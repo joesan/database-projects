@@ -49,7 +49,7 @@ CREATE TABLE chronometer (
 
 CREATE TABLE powerplant (
     powerPlantId     INT         NOT NULL,
-    orgName          VARCHAR(25) NOT NULL,
+    tenantId         INT         NOT NULL,
     isActive         BOOL        NOT NULL,
     minPower         INT         NOT NULL,
     maxPower         INT         NOT NULL,
@@ -59,18 +59,18 @@ CREATE TABLE powerplant (
     createdAt        TIMESTAMP   NOT NULL,
     updatedAt        TIMESTAMP   NOT NULL,
     PRIMARY KEY (powerPlantId),
-    FOREIGN KEY (orgName) REFERENCES organization (orgName) ON DELETE CASCADE
+    FOREIGN KEY (tenantId) REFERENCES tenant (tenantId) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE user (
     userId       INT             NOT NULL,
-    orgName      VARCHAR(25)     NOT NULL,
+    tenantId     INT             NOT NULL,
     firstName    VARCHAR(30)     NOT NULL,
     lastName     VARCHAR(30)     NOT NULL,
     createdAt    TIMESTAMP       NOT NULL,
     updatedAt    TIMESTAMP       NOT NULL, 
     PRIMARY KEY (userId),
-    FOREIGN KEY (orgName) REFERENCES organization (orgName) ON DELETE CASCADE
+    FOREIGN KEY (tenantId) REFERENCES tenant (tenantId) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
